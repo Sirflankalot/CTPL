@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Prep) {
+    stage('Prep') {
       steps {
         stash name: 'source', includes: '*'
       }
