@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label: 'master'
+  }
   stages {
     stage('Prep') {
       steps {
@@ -11,7 +13,7 @@ pipeline {
       parallel {
         stage('Build-Clang') {
           steps {
-            node('gce-worker') {
+            node('!master') {
               unstash name: 'source'
               sh 'clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
               sh '$WORKSPACE/example'
@@ -20,7 +22,7 @@ pipeline {
         }
         stage('Build-GCC') {
           steps {
-            node('gce-worker')  {
+            node('!master')  {
               unstash name: 'source'
               sh 'g++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
               sh '$WORKSPACE/example'
