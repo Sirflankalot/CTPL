@@ -2,20 +2,19 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        parallel {
-          "build-clang" : {
-            sh 'clang++ -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
-          }
-          "build-gcc" : {
-            sh 'g++ -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
+      parallel {
+        stage('Build-Clang') {
+          steps {
+            sh 'clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
+            sh '$WORKSPACE/example'
           }
         }
-      }
-    }
-    stage('Execute') {
-      steps {
-        sh '$WORKSPACE/example'
+        stage('Build-GCC') {
+          steps {
+            sh 'g++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
+            sh '$WORKSPACE/example'
+          }
+        }
       }
     }
   }
