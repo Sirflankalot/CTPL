@@ -20,6 +20,7 @@ pipeline {
         stage('Build-GCC') {
           steps {
             node('gce-worker')  {
+              unstash name: 'source'
               sh 'g++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
               sh '$WORKSPACE/example'
             }
