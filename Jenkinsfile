@@ -4,10 +4,10 @@ pipeline {
     stage('Build') {
       steps {
         parallel {
-          "build-clang"  {
+          "build-clang" : {
             sh 'clang++ -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
           }
-          "build-gcc"  {
+          "build-gcc" : {
             sh 'g++ -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
           }
         }
