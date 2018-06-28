@@ -14,7 +14,7 @@ pipeline {
       parallel {
         stage('Build-Clang') {
           steps {
-            node('master') {
+            node('gce-worker') {
               unstash name: 'source'
               sh 'clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
               sh '$WORKSPACE/example'
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Build-GCC') {
           steps {
-            node('master')  {
+            node('gce-worker')  {
               unstash name: 'source'
               sh 'g++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
               sh '$WORKSPACE/example'
