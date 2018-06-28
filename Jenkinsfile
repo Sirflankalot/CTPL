@@ -1,10 +1,10 @@
 pipeline {
-  agent any;
+  agent any
   stages {
     stage('Prep') {
       steps {
         stash name: 'source', includes: '*'
-        sh 'echo hello world 2'
+        sh 'echo hello world'
       }
     }
     stage('Build') {
