@@ -4,7 +4,7 @@ pipeline {
     stage('Prep') {
       steps {
         stash name: 'source', includes: '*'
-        sh 'echo hello world'
+        sh 'echo hello world 2'
       }
     }
     stage('Build') {
