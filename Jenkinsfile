@@ -1,11 +1,17 @@
 pipeline {
   agent any
   stages {
+    stage('Prep) {
+      steps {
+        stash name: 'source', includes: '*'
+      }
+    }
     stage('Build') {
       parallel {
         stage('Build-Clang') {
           steps {
             node('gce-worker') {
+              unstash name: 'source'
               sh 'clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'
               sh '$WORKSPACE/example'
             }
