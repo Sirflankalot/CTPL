@@ -1,14 +1,14 @@
-node('master') {
-  stage('Prep'){
-     checkout 
-      stash name: 'source', includes: '*'
-      sh 'echo hello world 2'
-   }
-}
-
 pipeline {
   agent none;
   stages {
+    stage('Prep') {
+      steps {
+        node('master') {
+          stash name: 'source', includes: '*'
+          sh 'echo hello world 2'
+        }
+      }
+    }
     stage('Build') {
       parallel {
         stage('Build-Clang') {
