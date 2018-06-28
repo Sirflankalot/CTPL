@@ -3,11 +3,8 @@ pipeline {
   stages {
     stage('Prep') {
       steps {
-        node('master') {
-          checkout scm;
-          stash name: 'source', includes: '*'
-          sh 'echo hello world 2'
-        }
+        stash name: 'source', includes: '*'
+        sh 'echo hello world 2'
       }
     }
     stage('Build') {
