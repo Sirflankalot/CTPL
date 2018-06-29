@@ -13,6 +13,7 @@ pipeline {
         stage('Build-GCC') {
           steps {
             node('gce-worker') {
+              deleteDir()
               unstash name: 'source'
               sh '''clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'''
               stash name: 'gcc-build', includes: 'example'
@@ -22,6 +23,7 @@ pipeline {
         stage('Build-Clang') {
           steps {
             node('gce-worker') {
+              deleteDir()
               unstash name: 'source'
               sh '''clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'''
               stash name: 'clang-build', includes: 'example'
@@ -35,6 +37,7 @@ pipeline {
         stage('Verify-GCC') {
           steps {
             node('gce-worker') {
+              deleteDir()
               sh 'ls -lah'
               unstash name: 'gcc-build'
               sh 'ls -lah'
@@ -45,6 +48,7 @@ pipeline {
         stage('Verify-Clang') {
           steps {
             node('gce-worker') {
+              deleteDir()
               sh 'ls -lah'
               unstash name: 'clang-build'
               sh 'ls -lah'
