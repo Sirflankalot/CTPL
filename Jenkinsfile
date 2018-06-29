@@ -35,7 +35,9 @@ pipeline {
         stage('Verify-GCC') {
           steps {
             node('gce-worker') {
+              sh 'ls -lah'
               unstash name: 'gcc-build'
+              sh 'ls -lah'
               sh '''$WORKSPACE/example'''
             }
           }
@@ -43,7 +45,9 @@ pipeline {
         stage('Verify-Clang') {
           steps {
             node('gce-worker') {
+              sh 'ls -lah'
               unstash name: 'clang-build'
+              sh 'ls -lah'
               sh '''$WORKSPACE/example'''
             }
           }
