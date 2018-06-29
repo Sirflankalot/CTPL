@@ -15,7 +15,7 @@ pipeline {
             node('gce-worker') {
               deleteDir()
               unstash name: 'source'
-              sh '''clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'''
+              sh '''g++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'''
               stash name: 'gcc-build', includes: 'example'
             }
           }
