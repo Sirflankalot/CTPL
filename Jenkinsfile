@@ -12,7 +12,7 @@ pipeline {
       parallel {
         stage('Build-GCC') {
           steps {
-            node('gce-worker') {
+            node('gce4-worker') {
               deleteDir()
               unstash name: 'source'
               sh '''g++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'''
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Build-Clang') {
           steps {
-            node('gce-worker') {
+            node('gce4-worker') {
               deleteDir()
               unstash name: 'source'
               sh '''clang++ -O3 -Wall $WORKSPACE/example.cpp -I$WORKSPACE -o $WORKSPACE/example -lpthread'''
@@ -36,7 +36,7 @@ pipeline {
       parallel {
         stage('Verify-GCC') {
           steps {
-            node('gce-worker') {
+            node('gce8-worker') {
               deleteDir()
               sh 'ls -lah'
               unstash name: 'gcc-build'
@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Verify-Clang') {
           steps {
-            node('gce-worker') {
+            node('gce8-worker') {
               deleteDir()
               sh 'ls -lah'
               unstash name: 'clang-build'
